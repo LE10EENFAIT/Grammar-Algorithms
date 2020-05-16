@@ -1,0 +1,8 @@
+S -> NP VP
+PP -> P NP
+NP -> Det N | NP PP
+VP -> V NP | VP PP
+Det -> 'the'
+N -> 'kids' | 'box' | 'floor'
+V -> 'opened'
+P -> 'on'
