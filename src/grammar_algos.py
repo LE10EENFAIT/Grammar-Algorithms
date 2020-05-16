@@ -30,7 +30,8 @@ def CYK(grammar, word, solve=True):
                             if (B,C) in index:
                                 if cyk[i][j] == 'ø':
                                     cyk[i][j] = []
-                                cyk[i][j].append(index[(B,C)])
+                                if index[(B,C)] not in cyk[i][j]:
+                                    cyk[i][j].append(index[(B,C)])
     trace(cyk)
     try:
         return grammar.productions()[0].lhs() in cyk[0][size_word-1]
