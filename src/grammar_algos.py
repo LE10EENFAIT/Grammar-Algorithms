@@ -45,8 +45,9 @@ if __name__ == "__main__":
     algo = input("Which algorithm do you want to use?\n").upper()
 
     if algo == "CYK":
-        ##Try w/ the kids opened the box on the floor
-        word = input("Type the word to analyze\n")
+        word = input("Type the word to analyze (or type eg to use the example)\n")
+        if word == "eg":
+            word = "the kids opened the box on the floor"
         print('CYK algorithm for',word,': \n')
         if CYK(grammar, word.split(), solve=True):
             print(word,"is in the grammar")
