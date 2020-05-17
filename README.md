@@ -11,6 +11,7 @@ Run `python3 grammar_algos.py -f [path of the file containing the grammar]` and 
 
 # Algorithms implemented
 -[CYK algorithm](https://en.wikipedia.org/wiki/CYK_algorithm)
+
 -[First algorithm (for an LL parser)](https://en.wikipedia.org/wiki/LL_parser)
 
 # Template of grammar
