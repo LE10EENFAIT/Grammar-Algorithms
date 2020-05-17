@@ -1,5 +1,5 @@
 # Grammar Algorithms
-Algorithms for grammar analysis in Python
+Algorithms for grammar analysis for  Python 3
 
 # Requirements
 -[nltk](https://www.nltk.org/)
