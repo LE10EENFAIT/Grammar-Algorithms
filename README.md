@@ -26,6 +26,9 @@ TP -> '*' F TP | 'ε'
 F -> '(' E ')' | 'id'
 
 
+
+
+
 S -> NP VP
 
 PP -> P NP
