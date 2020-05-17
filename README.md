@@ -2,7 +2,7 @@
 Algorithms for grammar analysis in Python
 
 # Requirements
-[nltk](https://www.nltk.org/)
+[-nltk](https://www.nltk.org/)
 
 Run `pip3 install -r requirements.txt`
 
