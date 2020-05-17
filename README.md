@@ -16,17 +16,28 @@ Run `python3 grammar_algos.py -f [path of the file containing the grammar]` and 
 
 # Template of grammar
 E -> T EP
-EP -> '+' T EP | 'eps'
+
+EP -> '+' T EP | 'ε'
+
 T -> F TP
-TP -> '*' F TP | 'eps'
+
+TP -> '*' F TP | 'ε'
+
 F -> '(' E ')' | 'id'
 
 
 S -> NP VP
+
 PP -> P NP
+
 NP -> Det N | NP PP
+
 VP -> V NP | VP PP
+
 Det -> 'the'
+
 N -> 'kids' | 'box' | 'floor'
+
 V -> 'opened'
+
 P -> 'on'
