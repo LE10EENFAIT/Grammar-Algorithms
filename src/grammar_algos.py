@@ -48,24 +48,18 @@ def CYK(grammar, word, solve=True):
 ##Implementation of first algorithm for an LL parser
 def first(grammar, solve=True):
 
-    def add_first(x, y):
+    def add_els(x, els):
         add = False
-        if eps not in index[y]:
-            if index[x.lhs()] != {''}:
-                t = index[x.lhs()]
-                index[x.lhs()] = index[x.lhs()] | index[y]
-                if index[x.lhs()] != t:
-                    add = True
-            else:
-                index[x.lhs()] = index[y]
-                add = True
+        t = index[x.lhs()]
+        index[x.lhs()] = index[x.lhs()] | els
+        if index[x.lhs()] != t:
+            add = True
         return add
 
     def trace_first(index):
         for key in index.keys():
             if not isinstance(key, str):
                 print("First(" + str(key) + ") =",index[key])
-
 
     ##Init
     index = {}
@@ -75,7 +69,7 @@ def first(grammar, solve=True):
             
         c = prod.lhs()
         if c not in index:
-            index[c] = set([''])
+            index[c] = set()
 
         for c in list(prod.rhs()):
             if isinstance(c, str):
@@ -90,7 +84,8 @@ def first(grammar, solve=True):
                 r = list(S.rhs())
 
                 ##First rule
-                add = add_first(S, r[0]) or add ##If add is True, we need to keep it True
+                if eps not in index[r[0]]:
+                    add = add_els(S, index[r[0]]) or add ##If add is True, we need to keep it True
 
                 ##Second rule
                 for j in range(1, len(r)):
@@ -100,7 +95,8 @@ def first(grammar, solve=True):
                             add_before = False
                             break
                     if add_before:
-                        add = add_first(S, r[j]) or add ##If add is True, we need to keep it True
+                        if eps not in index[r[0]]:
+                            add = add_els(S, index[r[j]]) or add ##If add is True, we need to keep it True
 
                 ##Third rule
                 add_eps = True
@@ -110,14 +106,8 @@ def first(grammar, solve=True):
                         break
 
                 if add_eps:
-                    if index[S.lhs()] != {''}:
-                        t = index[S.lhs()]
-                        index[S.lhs()] = index[S.lhs()] | {eps}
-                        if index[S.lhs()] != t:
-                            add = True
-                    else:
-                        index[S.lhs()] = {eps}
-                        add = True
+                    add = add_els(S, {eps}) or add
+
     trace_first(index)
     return index
     

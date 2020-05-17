@@ -30,11 +30,11 @@ F -> '(' E ')' | 'id'
 #### Output for first algorithm:
 ```
 The first table for this grammar is:
-First(E) = {'id', '('}
-First(EP) = {'ε', '+'}
-First(T) = {'id', '('}
+First(E) = {'(', 'id'}
+First(EP) = {'+', 'ε'}
+First(T) = {'(', 'id'}
 First(TP) = {'*', 'ε'}
-First(F) = {'id', '('}
+First(F) = {'(', 'id'}
 ```
 
 ### 2.
