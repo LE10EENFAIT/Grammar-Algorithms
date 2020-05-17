@@ -2,7 +2,7 @@
 Algorithms for grammar analysis in Python
 
 # Requirements
-[-nltk](https://www.nltk.org/)
+-[nltk](https://www.nltk.org/)
 
 Run `pip3 install -r requirements.txt`
 
@@ -15,6 +15,8 @@ Run `python3 grammar_algos.py -f [path of the file containing the grammar]` and 
 -[First algorithm (for an LL parser)](https://en.wikipedia.org/wiki/LL_parser)
 
 # Template of grammar
+### 1.
+
 E -> T EP
 
 EP -> '+' T EP | 'ε'
@@ -27,7 +29,7 @@ F -> '(' E ')' | 'id'
 
 
 
-
+### 2.
 
 S -> NP VP
 
