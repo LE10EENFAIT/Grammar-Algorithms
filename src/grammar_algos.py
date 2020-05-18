@@ -80,21 +80,6 @@ def first(grammar, solve=True):
             for S in grammar.productions():
                 r = list(S.rhs())
 
-                ##First rule
-                if eps not in index[r[0]]:
-                    add = add_els(S, index[r[0]]) or add ##If add is True, we need to keep it True
-
-                ##Second rule
-                for j in range(1, len(r)):
-                    add_before = True
-                    for i in range(j):
-                        if eps not in index[r[i]]:
-                            add_before = False
-                            break
-                    if add_before:
-                        if eps not in index[r[0]]:
-                            add = add_els(S, index[r[j]]) or add ##If add is True, we need to keep it True
-
                 ##Third rule
                 add_eps = True
                 for i in range(len(r)):
@@ -104,6 +89,22 @@ def first(grammar, solve=True):
 
                 if add_eps:
                     add = add_els(S, {eps}) or add
+
+                ##First rule
+                elif eps not in index[r[0]]:
+                    add = add_els(S, index[r[0]]) or add ##If add is True, we need to keep it True
+
+                else:
+                    ##Second rule
+                    for j in range(1, len(r)):
+                        add_before = True
+                        for i in range(j):
+                            if eps not in index[r[i]]:
+                                add_before = False
+                                break
+                        if add_before:
+                            if eps not in index[r[0]]:
+                                add = add_els(S, index[r[j]]) or add ##If add is True, we need to keep it True
 
     trace_first(index)
     return index
