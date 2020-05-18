@@ -117,7 +117,7 @@ def first(grammar, solve=True):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-f", "--file", type=str, help="the path of the text file containing the grammar")
+    parser.add_argument("-f", "--file", type=str, help="the path of the text file containing the grammar", required=True)
     args = parser.parse_args()
 
     grammar = load_grammar(args.file)
