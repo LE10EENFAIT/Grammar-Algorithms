@@ -2,7 +2,7 @@
 Algorithms for grammar analysis for  Python 3 with nltk
 
 # Requirements
--[nltk](https://www.nltk.org/)
+- [nltk](https://www.nltk.org/)
 
 Run `pip3 install -r requirements.txt`
 
@@ -10,9 +10,9 @@ Run `pip3 install -r requirements.txt`
 Run `python3 grammar_algos.py -f [path of the file containing the grammar]` and follow instructions on the terminal
 
 # Algorithms implemented
--[CYK algorithm](https://en.wikipedia.org/wiki/CYK_algorithm)
+- [CYK algorithm](https://en.wikipedia.org/wiki/CYK_algorithm)
 
--[First algorithm (for an LL parser)](https://en.wikipedia.org/wiki/LL_parser)
+- [First algorithm (for an LL parser)](https://en.wikipedia.org/wiki/LL_parser)
 
 # Template of grammar
 ### 1.
