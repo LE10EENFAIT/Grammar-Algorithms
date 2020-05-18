@@ -143,7 +143,7 @@ if __name__ == "__main__":
         
         else:
             print("Unknown algorithm. The algorithms currently implemented are: ")
-            print("-CYK")
-            print("-First")
+            print("- CYK")
+            print("- First")
             print('\n')
             it = True
