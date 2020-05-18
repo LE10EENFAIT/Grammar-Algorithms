@@ -1,4 +1,4 @@
-# Grammar Algorithms
+# Formal Language Algorithms
 Algorithms for formal language written with Python 3 with nltk
 
 # Requirements
