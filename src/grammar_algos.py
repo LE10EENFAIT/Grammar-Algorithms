@@ -64,17 +64,14 @@ def first(grammar, solve=True):
     ##Init
     index = {}
     for prod in grammar.productions():
-        if eps in list(prod.rhs()):
-            index[prod.lhs()] = set([eps])
-            
-        c = prod.lhs()
-        if c not in index:
-            index[c] = set()
+        index[prod.lhs()] = set()
 
+        if eps in list(prod.rhs()):
+            index[prod.lhs()] |= set([eps])
+            
         for c in list(prod.rhs()):
             if isinstance(c, str):
                 index[c] = set([c])
-
     ##Iteration
     if solve:
         add = True
