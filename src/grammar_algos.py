@@ -27,7 +27,7 @@ def CYK(grammar, word, solve=True):
         for i in range(len(cyk)):
             print(cyk[i])
 
-    ##Init
+    ##Initialisation
     size_word = len(word)
     cyk = [['ø' for i in range(size_word)] for j in range(size_word)]
 
@@ -72,7 +72,7 @@ def first(grammar, solve=True, trace=True):
             return True
         return False
 
-    ##Init
+    ##Initialisation
     premier = {}
     for prod in grammar.productions():
         premier[prod.lhs()] = set()
@@ -83,7 +83,8 @@ def first(grammar, solve=True, trace=True):
         for c in list(prod.rhs()):
             if isinstance(c, str):
                 premier[c] = set([c])
-    ##Iteration
+
+    ##Iterations
     if solve:
         add = True
         while(add):
@@ -147,6 +148,7 @@ def follow(grammar, trace=True):
                 res.append([a,M,B])
         return res
 
+    ##Initialisation
     suivant = {}
 
     for prod in grammar.productions():
@@ -156,6 +158,7 @@ def follow(grammar, trace=True):
                 suivant[c] = set([c])
     suivant[grammar.productions()[0].lhs()] = set([dollar])
 
+    ##Iteration
     premier = first(grammar, trace=False)
     add = True
     while(add):
