@@ -14,6 +14,8 @@ Run `python3 grammar_algos.py -f [path of the file containing the grammar]` and 
 
 - [First algorithm (for an LL parser)](https://en.wikipedia.org/wiki/LL_parser)
 
+- [Follow algorithm (for an LL parser)](https://en.wikipedia.org/wiki/LL_parser)
+
 # Template of grammar
 ### 1.
 
@@ -25,12 +27,22 @@ F -> '(' E ')' | 'id'
 
 #### Output for first algorithm:
 ```
-The first table for this grammar is:
-First(E) = {'(', 'id'}
-First(EP) = {'+', 'ε'}
-First(T) = {'(', 'id'}
-First(TP) = {'*', 'ε'}
-First(F) = {'(', 'id'}
+The First sets for this grammar are: 
+First(E) = {(, id}
+First(EP) = {ε, +}
+First(T) = {(, id}
+First(TP) = {ε, *}
+First(F) = {(, id}
+```
+
+### Output for follow algorithm:
+```
+The Follow sets for this grammar are: 
+Follow(E) = {$, )}
+Follow(EP) = {$, )}
+Follow(T) = {$, ), +}
+Follow(TP) = {$, ), +}
+Follow(F) = {$, ), *, +}
 ```
 
 ### 2.

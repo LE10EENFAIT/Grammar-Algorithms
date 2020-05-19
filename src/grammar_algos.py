@@ -2,10 +2,23 @@ import nltk
 import argparse
 
 eps = 'ε'
+dollar = '$'
 
 def load_grammar(filename):
     f = open(filename, 'r')
     return nltk.CFG.fromstring(f.read())
+
+def trace_index(index, msg):
+        for key in index.keys():
+            if not isinstance(key, str):
+                print(msg + "(" + str(key) + ") = {", end='')
+
+                for i in range(len(index[key])):
+                    if i < len(index[key]) - 1:
+                        print(list(index[key])[i], end=', ')
+                    else:
+                        print(list(index[key])[i], end='')
+                print('}')
 
 ##Implementation of CYK algorithm
 def CYK(grammar, word, solve=True):
@@ -46,32 +59,30 @@ def CYK(grammar, word, solve=True):
         return False
 
 ##Implementation of first algorithm for an LL parser
-def first(grammar, solve=True):
+def first(grammar, solve=True, trace=True):
 
-    def add_els(x, els):
-        add = False
-        t = index[x.lhs()]
-        index[x.lhs()] = index[x.lhs()] | els
-        if index[x.lhs()] != t:
-            add = True
-        return add
-
-    def trace_first(index):
-        for key in index.keys():
-            if not isinstance(key, str):
-                print("First(" + str(key) + ") =",index[key])
+    def add_els(x, els, remove_eps=True):
+        temp1 = premier[x.lhs()].copy()
+        temp2 = els.copy()
+        if remove_eps:
+            if eps in temp2:
+                temp2.remove(eps)
+        premier[x.lhs()] = premier[x.lhs()] | temp2
+        if premier[x.lhs()] != temp1:
+            return True
+        return False
 
     ##Init
-    index = {}
+    premier = {}
     for prod in grammar.productions():
-        index[prod.lhs()] = set()
+        premier[prod.lhs()] = set()
 
         if eps in list(prod.rhs()):
-            index[prod.lhs()] |= set([eps])
+            premier[prod.lhs()] |= set([eps])
             
         for c in list(prod.rhs()):
             if isinstance(c, str):
-                index[c] = set([c])
+                premier[c] = set([c])
     ##Iteration
     if solve:
         add = True
@@ -80,35 +91,100 @@ def first(grammar, solve=True):
             for S in grammar.productions():
                 r = list(S.rhs())
 
+                ##First rule
+                add += add_els(S, premier[r[0]])
+
                 ##Third rule
                 add_eps = True
                 for i in range(len(r)):
-                    if eps not in index[r[i]]:
+                    if eps not in premier[r[i]]:
                         add_eps = False
                         break
 
                 if add_eps:
-                    add = add_els(S, {eps}) or add
-
-                ##First rule
-                elif eps not in index[r[0]]:
-                    add = add_els(S, index[r[0]]) or add ##If add is True, we need to keep it True
+                    add += add_els(S, {eps}, remove_eps=False)
 
                 else:
                     ##Second rule
                     for j in range(1, len(r)):
                         add_before = True
                         for i in range(j):
-                            if eps not in index[r[i]]:
+                            if eps not in premier[r[i]]:
                                 add_before = False
                                 break
                         if add_before:
-                            if eps not in index[r[0]]:
-                                add = add_els(S, index[r[j]]) or add ##If add is True, we need to keep it True
+                            add += add_els(S, premier[r[j]])
+                
 
-    trace_first(index)
-    return index
+    if trace:
+        trace_index(premier, "First")
+    return premier
+
+##Implementation of follow algorithm for an LL parser
+def follow(grammar, trace=True):
+
+    def add_els(x, els):
+        temp1 = suivant[x].copy()
+        temp2 = els.copy()
+
+        if eps in temp2:
+            temp2.remove(eps)
+
+        suivant[x] = suivant[x] | temp2
+        if suivant[x] != temp1:
+            return True
+        return False
+
+    def decompose_aMb(W):
+        res = []
+        for i in range(len(W)):
+            if not isinstance(W[i], str) and i < len(W) - 1:
+                a = W[:i]
+                M = W[i]
+                B = W[i+1:]
+                if a == []:
+                    a = eps
+                res.append([a,M,B])
+        return res
+
+    suivant = {}
+
+    for prod in grammar.productions():
+        suivant[prod.lhs()] = set()
+        for c in list(prod.rhs()):
+            if isinstance(c, str):
+                suivant[c] = set([c])
+    suivant[grammar.productions()[0].lhs()] = set([dollar])
+
+    premier = first(grammar, trace=False)
+    add = True
+    while(add):
+        add = False
+        for S in grammar.productions():
+            
+            ##First decomposition
+            decompositions = decompose_aMb(list(S.rhs()))
+            for decomposition in decompositions:
+                ##First rule
+                if isinstance(decomposition[2][0], str):
+                    add += add_els(decomposition[1], set([decomposition[2][0]]))
+                else:
+                    add += add_els(decomposition[1], premier[decomposition[2][0]])
+
+                    ##Second rule
+                    if eps in premier[decomposition[2][0]]:
+                        add += add_els(decomposition[1], suivant[S.lhs()])
+
+            ##Second decomposition
+            rhs = list(S.rhs())        
+            add = add_els(rhs[len(rhs)-1], suivant[S.lhs()]) or add
+
+    if trace:
+        trace_index(suivant, "Follow")
     
+    return suivant
+
+
 
 
 
@@ -136,12 +212,17 @@ if __name__ == "__main__":
                 print(word,"is not in the grammar")
         
         elif algo == "FIRST":
-            print("\nThe first table for this grammar is: ")
-            first(grammar,solve=True)
+            print("\nThe First sets for this grammar are: ")
+            first(grammar,solve=True, trace=True)
+        
+        elif algo == "FOLLOW":
+            print("\nThe Follow sets for this grammar are: ")
+            follow(grammar,trace=True)
         
         else:
             print("Unknown algorithm. The algorithms currently implemented are: ")
             print("- CYK")
             print("- First")
+            print('- Follow')
             print('\n')
             it = True
