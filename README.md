@@ -25,7 +25,7 @@ T -> F TP
 TP -> '*' F TP | 'ε'  
 F -> '(' E ')' | 'id'  
 
-#### Output for first algorithm:
+#### Output for First algorithm:
 ```
 The First sets for this grammar are: 
 First(E) = {(, id}
@@ -35,7 +35,7 @@ First(TP) = {ε, *}
 First(F) = {(, id}
 ```
 
-### Output for follow algorithm:
+#### Output for Follow algorithm:
 ```
 The Follow sets for this grammar are: 
 Follow(E) = {$, )}
