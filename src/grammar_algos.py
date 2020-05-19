@@ -58,8 +58,8 @@ def CYK(grammar, word, solve=True):
     except:
         return False
 
-##Implementation of first algorithm for an LL parser
-def first(grammar, solve=True, trace=True):
+##Implementation of First algorithm for an LL parser
+def First(grammar, solve=True, trace=True):
 
     def add_els(x, els, remove_eps=True):
         temp1 = premier[x.lhs()].copy()
@@ -121,8 +121,8 @@ def first(grammar, solve=True, trace=True):
         trace_index(premier, "First")
     return premier
 
-##Implementation of follow algorithm for an LL parser
-def follow(grammar, trace=True):
+##Implementation of Follow algorithm for an LL parser
+def Follow(grammar, trace=True):
 
     def add_els(x, els):
         temp1 = suivant[x].copy()
@@ -159,7 +159,7 @@ def follow(grammar, trace=True):
     suivant[grammar.productions()[0].lhs()] = set([dollar])
 
     ##Iteration
-    premier = first(grammar, trace=False)
+    premier = First(grammar, trace=False)
     add = True
     while(add):
         add = False
@@ -216,11 +216,11 @@ if __name__ == "__main__":
         
         elif algo == "FIRST":
             print("\nThe First sets for this grammar are: ")
-            first(grammar,solve=True, trace=True)
+            First(grammar,solve=True, trace=True)
         
         elif algo == "FOLLOW":
             print("\nThe Follow sets for this grammar are: ")
-            follow(grammar,trace=True)
+            Follow(grammar,trace=True)
         
         else:
             print("Unknown algorithm. The algorithms currently implemented are: ")
