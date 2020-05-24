@@ -16,6 +16,8 @@ Run `python3 grammar_algos.py -f [path of the file containing the grammar]` and 
 
 - [Follow algorithm (for an LL parser)](https://en.wikipedia.org/wiki/LL_parser)
 
+- [LL parser](https://en.wikipedia.org/wiki/LL_parser)
+
 # Template of grammar
 ### 1.
 
@@ -43,6 +45,16 @@ Follow(EP) = {$, )}
 Follow(T) = {$, ), +}
 Follow(TP) = {$, ), +}
 Follow(F) = {$, ), *, +}
+```
+
+#### Output for LL parser (need to be revised):
+```
+The LL table for this grammar is: 
+LL(E, '$') = {}   LL(E, '+') = {}   LL(E, '*') = {}   LL(E, '(') = {E -> T EP}   LL(E, ')') = {}   LL(E, 'id') = {E -> T EP}   
+LL(EP, '$') = {EP -> 'ε'}   LL(EP, '+') = {EP -> '+' T EP}   LL(EP, '*') = {}   LL(EP, '(') = {}   LL(EP, ')') = {EP -> 'ε'}   LL(EP, 'id') = {}   
+LL(T, '$') = {}   LL(T, '+') = {}   LL(T, '*') = {}   LL(T, '(') = {T -> F TP}   LL(T, ')') = {}   LL(T, 'id') = {T -> F TP}   
+LL(TP, '$') = {TP -> 'ε'}   LL(TP, '+') = {TP -> 'ε'}   LL(TP, '*') = {TP -> '*' F TP}   LL(TP, '(') = {}   LL(TP, ')') = {TP -> 'ε'}   LL(TP, 'id') = {}   
+LL(F, '$') = {}   LL(F, '+') = {}   LL(F, '*') = {}   LL(F, '(') = {F -> '(' E ')'}   LL(F, ')') = {}   LL(F, 'id') = {F -> 'id'} 
 ```
 
 ### 2.

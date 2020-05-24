@@ -188,6 +188,57 @@ def Follow(grammar, trace=True):
     return suivant
 
 
+def LL(grammar, trace=True):
+
+    def add_el(case, el):
+        if case in ll:
+            ll[case] = ll[case] | set([R])
+        else:
+            ll[case] = set([R])
+
+    
+
+    def trace():
+        N_Ts = []
+        Ts = [dollar]
+        for prod in grammar.productions():
+            if prod.lhs() not in N_Ts:
+                N_Ts.append(prod.lhs())
+
+            for c in list(prod.rhs()):
+                if isinstance(c, str) and c not in Ts:
+                    Ts.append(c)
+
+        for N_T in N_Ts:
+            for T in Ts:
+                if (N_T, T) in ll:
+                    print('LL(' + str(N_T) + ", '" + str(T) + "') =", ll[N_T, T], end='   ')
+                elif T != eps:
+                    print('LL(' + str(N_T) + ", '" + str(T) + "') = {}", end='   ')
+            print('\n',end='')
+
+
+
+    first = First(grammar, trace=False)
+    follow = Follow(grammar, trace=False)
+
+    ll ={}
+
+    for R in grammar.productions():
+        al = list(R.rhs())[0]
+        for a in first[al]:
+            if a != eps:
+                add_el((R.lhs(), a), R)
+
+        if eps in first[al]:
+            for b in follow[R.lhs()]:
+                add_el((R.lhs(), b), R)
+    
+    if trace:
+        trace()
+    
+    return ll
+
 
 
 
@@ -222,10 +273,15 @@ if __name__ == "__main__":
             print("\nThe Follow sets for this grammar are: ")
             Follow(grammar,trace=True)
         
+        elif algo == "LL":
+            print("\nThe LL table for this grammar is: ")
+            LL(grammar, trace=True)
+
         else:
             print("Unknown algorithm. The algorithms currently implemented are: ")
             print("- CYK")
             print("- First")
             print('- Follow')
+            print('- LL')
             print('\n')
             it = True
