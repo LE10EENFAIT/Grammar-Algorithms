@@ -196,8 +196,6 @@ def LL(grammar, trace=True):
         else:
             ll[case] = set([R])
 
-    
-
     def trace():
         N_Ts = []
         Ts = [dollar]
@@ -216,7 +214,6 @@ def LL(grammar, trace=True):
                 elif T != eps:
                     print('LL(' + str(N_T) + ", '" + str(T) + "') = {}", end='   ')
             print('\n',end='')
-
 
 
     first = First(grammar, trace=False)
