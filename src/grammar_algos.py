@@ -253,14 +253,14 @@ if __name__ == "__main__":
         algo = input("Which algorithm do you want to use?\n").upper()
 
         if algo == "CYK":
-            word = input("Type the word to analyze (or type eg to use the example)\n")
-            if word == "eg":
+            word = input("Type the word to analyze (or press enter to use the example)\n")
+            if word == "":
                 word = "the kids opened the box on the floor"
-            print('\nCYK algorithm for',word,': \n')
+            print('\nCYK algorithm for',"'" + word + "'",': \n')
             if CYK(grammar, word.split(), solve=True):
-                print(word,"is in the grammar")
+                print("'" + word + "'","is in the grammar")
             else:
-                print(word,"is not in the grammar")
+                print("'" + word + "'","is not in the grammar")
         
         elif algo == "FIRST":
             print("\nThe First sets for this grammar are: ")

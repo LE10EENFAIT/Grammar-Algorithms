@@ -70,7 +70,7 @@ P -> 'on'
 
 #### Output for CYK algorithm with the word "the kids opened the box on the floor":
 ```
-CYK algorithm for the kids opened the box on the floor :
+CYK algorithm for 'the kids opened the box on the floor' :
 
 [[Det], [NP], 'ø', 'ø', [S], 'ø', 'ø', [S]]
 ['ø', [N], 'ø', 'ø', 'ø', 'ø', 'ø', 'ø']
@@ -80,5 +80,5 @@ CYK algorithm for the kids opened the box on the floor :
 ['ø', 'ø', 'ø', 'ø', 'ø', [P], 'ø', [PP]]
 ['ø', 'ø', 'ø', 'ø', 'ø', 'ø', [Det], [NP]]
 ['ø', 'ø', 'ø', 'ø', 'ø', 'ø', 'ø', [N]]
-the kids opened the box on the floor is in the grammar
+'the kids opened the box on the floor' is in the grammar
 ```
